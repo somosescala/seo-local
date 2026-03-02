@@ -1,0 +1,9 @@
+{
+  "name": "seo-local",
+  "description": "Auditor senior de SEO Local. Ejecuta auditorías de Google Business Profile, on-page, schema markup y rankability.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Somos Escala"
+  },
+  "homepage": "https://github.com/somosescala/seo-local"
+}
