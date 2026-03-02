@@ -8,6 +8,8 @@ Plugin para Claude Code que convierte a Claude en un **auditor senior de SEO Loc
 
 | Comando | Descripción |
 |---------|-------------|
+| `/seo-local:seo-plan` | Guía de inicio — explica el proceso completo y por dónde empezar |
+| `/seo-local:gbp-audit` | Audita TU propia ficha de Google Business Profile |
 | `/seo-local:gbm-audit` | Auditoría de competidores en Google Maps + ranking levers |
 | `/seo-local:onpage-audit` | Auditoría on-page completa de una URL |
 | `/seo-local:schema-audit` | Auditoría de structured data / schema markup |
@@ -33,6 +35,35 @@ claude --plugin-dir ./seo-local
 ---
 
 ## Uso
+
+### `/seo-plan` — Guía de inicio
+
+Explica qué hace el plugin, todos los comandos disponibles y el proceso recomendado según tu objetivo.
+
+**Input:** Ninguno requerido
+
+**Output:**
+- Tabla de comandos disponibles
+- Flujo recomendado para rankear en Maps
+- Flujo recomendado para rankear orgánicamente
+- Flujo de auditoría completa
+
+---
+
+### `/gbp-audit` — Auditoría de tu propia ficha
+
+Audita en profundidad TU propia ficha de Google Business Profile e identifica qué te está frenando en el ranking.
+
+**Input:** Nombre del negocio + ciudad, o link directo al perfil en Google Maps
+
+**Output:**
+- Tabla completa de datos de la ficha (identidad, NAP, reseñas, completitud, fotos, actividad)
+- Score de completitud / 100
+- Top 3 fortalezas y top 3 problemas críticos
+- Tabla de action items ordenados por impacto
+- Recomendación del siguiente paso
+
+---
 
 ### `/gbm-audit` — Auditoría Google Business Profile
 
@@ -95,9 +126,19 @@ seo-local/
 ├── .claude-plugin/
 │   └── plugin.json          # Manifiesto del plugin
 ├── skills/
-│   └── seo-local/
-│       └── SKILL.md         # Lógica y flujos de auditoría
-└── SKILL.md                 # Versión standalone
+│   ├── seo-plan/
+│   │   └── SKILL.md         # Guía de inicio y flujos recomendados
+│   ├── gbp-audit/
+│   │   └── SKILL.md         # Auditoría de tu propia ficha GBP
+│   ├── gbm-audit/
+│   │   └── SKILL.md         # Auditoría de competidores en Maps
+│   ├── onpage-audit/
+│   │   └── SKILL.md         # Auditoría on-page
+│   ├── schema-audit/
+│   │   └── SKILL.md         # Auditoría de schema markup
+│   └── rankability-test/
+│       └── SKILL.md         # Test vs top 3 orgánicos
+└── README.md
 ```
 
 ---
