@@ -8,6 +8,8 @@ Plugin para Claude Code que convierte a Claude en un **auditor senior de SEO Loc
 
 | Comando | Descripción |
 |---------|-------------|
+| `/seo-local:audit` | **Full audit en un comando** — ejecuta todo en paralelo y genera roadmap en PDF |
+| `/seo-local:seo-roadmap` | Consolida resultados de auditorías previas en un roadmap + PDF |
 | `/seo-local:seo-plan` | Guía de inicio — explica el proceso completo y por dónde empezar |
 | `/seo-local:gbp-audit` | Audita TU propia ficha de Google Business Profile |
 | `/seo-local:gbm-audit` | Auditoría de competidores en Google Maps + ranking levers |
@@ -35,6 +37,35 @@ claude --plugin-dir ./seo-local
 ---
 
 ## Uso
+
+### `/audit` — Full SEO Local Audit (recomendado)
+
+Ejecuta todos los audits en paralelo con **un solo comando** usando sub-agentes especializados, luego genera un roadmap consolidado en PDF listo para entregar al cliente.
+
+**Input:** URL + keyword objetivo + link de Google Business Profile
+
+**Output:**
+- 4 sub-agentes corren en paralelo: on-page + schema, rankability, GBP propio, competidores
+- Resumen ejecutivo con hallazgos de todas las auditorías
+- Roadmap priorizado con matriz impacto/esfuerzo
+- Plan de acción 30/60/90 días
+- Reporte HTML + PDF profesional
+
+---
+
+### `/seo-roadmap` — Roadmap consolidado
+
+Toma los resultados de auditorías previas y los convierte en un plan de acción priorizado exportado como PDF. Útil cuando ya corriste los audits individuales y quieres el plan final.
+
+**Input:** Resultados de una o más auditorías (gbp-audit, gbm-audit, onpage-audit, schema-audit, rankability-test)
+
+**Output:**
+- Tabla maestra de todos los hallazgos consolidados
+- Matriz de priorización (4 cuadrantes: Quick Wins, Proyectos, Fill-ins, Reconsiderar)
+- Plan de acción 30/60/90 días con tareas concretas y responsables
+- Reporte HTML + PDF profesional listo para cliente
+
+---
 
 ### `/seo-plan` — Guía de inicio
 
@@ -126,6 +157,10 @@ seo-local/
 ├── .claude-plugin/
 │   └── plugin.json          # Manifiesto del plugin
 ├── skills/
+│   ├── audit/
+│   │   └── SKILL.md         # Master: lanza todos los audits + genera PDF
+│   ├── seo-roadmap/
+│   │   └── SKILL.md         # Consolida hallazgos en roadmap + PDF
 │   ├── seo-plan/
 │   │   └── SKILL.md         # Guía de inicio y flujos recomendados
 │   ├── gbp-audit/
