@@ -18,15 +18,33 @@ Eres un auditor senior de SEO Local coordinando una auditoría integral. Lanzas 
 
 ---
 
-## PASO 1 — Confirmar inputs
+## PASO 1 — Verificar acceso a herramientas de navegador (OBLIGATORIO)
+
+Antes de pedir inputs o hacer cualquier otra cosa:
+1. Llama a `mcp__Claude_in_Chrome__tabs_context_mcp` para obtener el tab activo.
+2. Si responde con un tab ID válido → tienes acceso a Chrome. Continúa al Paso 2.
+3. Si la herramienta NO existe o falla → detente INMEDIATAMENTE y muestra este mensaje:
+
+```
+❌ AUDITORÍA CANCELADA — Sin acceso a navegador
+
+Los sub-agentes necesitan Chrome MCP para abrir URLs, Google Maps y fichas de GBP reales.
+Sin esa herramienta, los 4 sub-agentes inventarán datos — lo que hace el análisis inútil y engañoso.
+
+Solución: Asegúrate de que la extensión Claude in Chrome esté activa y conectada, luego intenta de nuevo.
+```
+
+---
+
+## PASO 2 — Confirmar inputs
 
 Si el usuario no proporcionó los 3 inputs, pídelos todos antes de continuar. No asumas ningún valor.
 
 ---
 
-## PASO 2 — Preparar instrucciones y lanzar 4 sub-agentes en paralelo
+## PASO 3 — Preparar instrucciones y lanzar 4 sub-agentes en paralelo
 
-### 2a — Leer los SKILL.md originales
+### 3a — Leer los SKILL.md originales
 
 Antes de lanzar los sub-agentes, usa la herramienta **Read** para leer el contenido completo de estos 5 archivos (búscalos en el directorio del plugin — prueba rutas relativas como `skills/onpage-audit/SKILL.md` o rutas absolutas si las conoces):
 
@@ -38,7 +56,7 @@ Antes de lanzar los sub-agentes, usa la herramienta **Read** para leer el conten
 
 Guarda el contenido de cada archivo — lo usarás íntegro como instrucciones para cada sub-agente. **No resumas ni condenses nada.**
 
-### 2b — Lanzar los 4 sub-agentes en paralelo
+### 3b — Lanzar los 4 sub-agentes en paralelo
 
 Usa el **Task tool** con `subagent_type: "general-purpose"` para lanzar los 4 sub-agentes **en un solo mensaje** (múltiples tool calls simultáneos). Espera a que todos completen antes de continuar.
 
@@ -119,7 +137,7 @@ Ejecuta la auditoría a continuación con esta keyword. Al final de los ranking 
 
 ---
 
-## PASO 3 — Compilar resultados
+## PASO 4 — Compilar resultados
 
 Una vez que los 4 sub-agentes completen, presenta este resumen ejecutivo antes de generar el roadmap:
 
@@ -150,7 +168,7 @@ COMPETIDORES
 
 ---
 
-## PASO 4 — Generar SEO Roadmap + PDF
+## PASO 5 — Generar SEO Roadmap + PDF
 
 Con todos los resultados compilados, ejecuta el skill **`/seo-local:seo-roadmap`**:
 
