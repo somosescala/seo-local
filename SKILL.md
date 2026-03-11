@@ -22,11 +22,15 @@ Comandos disponibles:
 /rankability-test → Test de rankability vs top 3 resultados orgánicos
 ```
 
+> ⚠️ **Requisito previo:** Todos los comandos requieren la extensión **Claude in Chrome** activa y conectada en tu navegador. Sin ella, las auditorías no pueden abrir URLs ni Google Maps reales y se cancelarán automáticamente.
+
 ---
 
 ## /gbm-audit
 
 **Uso:** `/gbm-audit`
+
+> ⚠️ Requiere **Claude in Chrome** activo y conectado en el navegador.
 
 **Input requerido:**
 - Keyword (ej. "pastelerías en guadalajara")
@@ -168,6 +172,8 @@ Para cada lever, cita qué competidores lo demuestran y cómo.
 
 **Uso:** `/onpage-audit`
 
+> ⚠️ Requiere **Claude in Chrome** activo y conectado en el navegador.
+
 **Inputs requeridos:**
 - URL de la página
 - Keyword primaria (exacta)
@@ -297,6 +303,8 @@ Impacto: `Bajo` / `Medio` / `Alto`
 
 **Uso:** `/schema-audit`
 
+> ⚠️ Requiere **Claude in Chrome** activo y conectado en el navegador.
+
 **Inputs requeridos:**
 - URL de la página
 - Tipo de negocio (ej. "plomero", "dentista", "restaurante")
@@ -337,6 +345,8 @@ Prioridad: `Alta` / `Media` / `Baja`
 ## /rankability-test
 
 **Uso:** `/rankability-test`
+
+> ⚠️ Requiere **Claude in Chrome** activo y conectado en el navegador.
 
 **Inputs requeridos:**
 - URL de la página
