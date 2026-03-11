@@ -1,0 +1,59 @@
+{
+  "eval_name": "plomero-guadalajara",
+  "configuration": "without_skill",
+  "pass_rate": 0.4,
+  "passed": 4,
+  "total": 10,
+  "expectations": [
+    {
+      "text": "Resumen inicial de 5 bullets presente",
+      "passed": true,
+      "evidence": "Found 0 numbered points and 15 bullet points in first 2000 chars"
+    },
+    {
+      "text": "Tabla de Findings existe con estructura correcta",
+      "passed": false,
+      "evidence": "No Findings table markers found"
+    },
+    {
+      "text": "Cobertura mínima de áreas auditadas (10 de 12)",
+      "passed": true,
+      "evidence": "Found 11/13 required audit areas mentioned"
+    },
+    {
+      "text": "Tabla de Action Steps existe con estructura correcta",
+      "passed": false,
+      "evidence": "No Action Steps table markers found"
+    },
+    {
+      "text": "Estados correctos usados en Findings",
+      "passed": false,
+      "evidence": "No valid status terms found"
+    },
+    {
+      "text": "Priorización P0/P1/P2 presente",
+      "passed": false,
+      "evidence": "Found P0: 0, P1: 0, P2: 0 priority markers"
+    },
+    {
+      "text": "Esfuerzo e impacto especificados en Action Steps",
+      "passed": false,
+      "evidence": "Found 0 effort markers (S/M/L) and 0 impact markers"
+    },
+    {
+      "text": "Evidencia específica presente (al menos 50%)",
+      "passed": true,
+      "evidence": "Found 110 quotes, 15 code blocks, 12 specific metrics"
+    },
+    {
+      "text": "Recomendaciones accionables con texto exacto",
+      "passed": true,
+      "evidence": "Found 15 code blocks with specific recommendations"
+    },
+    {
+      "text": "Marca lo Desconocido en lugar de inventar",
+      "passed": false,
+      "evidence": "Found 0 'Desconocido' + 0 'No disponible' markers, indicating honest reporting of limitations"
+    }
+  ]
+}

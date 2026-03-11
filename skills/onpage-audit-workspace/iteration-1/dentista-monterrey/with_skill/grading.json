@@ -1,0 +1,59 @@
+{
+  "eval_name": "dentista-monterrey",
+  "configuration": "with_skill",
+  "pass_rate": 1.0,
+  "passed": 10,
+  "total": 10,
+  "expectations": [
+    {
+      "text": "Resumen inicial de 5 bullets presente",
+      "passed": true,
+      "evidence": "Found 5 numbered points and 0 bullet points in first 2000 chars"
+    },
+    {
+      "text": "Tabla de Findings existe con estructura correcta",
+      "passed": true,
+      "evidence": "Found Findings table markers"
+    },
+    {
+      "text": "Cobertura mínima de áreas auditadas (10 de 12)",
+      "passed": true,
+      "evidence": "Found 13/13 required audit areas mentioned"
+    },
+    {
+      "text": "Tabla de Action Steps existe con estructura correcta",
+      "passed": true,
+      "evidence": "Found Action Steps table markers"
+    },
+    {
+      "text": "Estados correctos usados en Findings",
+      "passed": true,
+      "evidence": "Uses valid status terms"
+    },
+    {
+      "text": "Priorización P0/P1/P2 presente",
+      "passed": true,
+      "evidence": "Found P0: 25, P1: 26, P2: 6 priority markers"
+    },
+    {
+      "text": "Esfuerzo e impacto especificados en Action Steps",
+      "passed": true,
+      "evidence": "Found 25 effort markers (S/M/L) and 24 impact markers"
+    },
+    {
+      "text": "Evidencia específica presente (al menos 50%)",
+      "passed": true,
+      "evidence": "Found 222 quotes, 3 code blocks, 11 specific metrics"
+    },
+    {
+      "text": "Recomendaciones accionables con texto exacto",
+      "passed": true,
+      "evidence": "Found 3 code blocks with specific recommendations"
+    },
+    {
+      "text": "Marca lo Desconocido en lugar de inventar",
+      "passed": true,
+      "evidence": "Found 52 'Desconocido' + 1 'No disponible' markers, indicating honest reporting of limitations"
+    }
+  ]
+}

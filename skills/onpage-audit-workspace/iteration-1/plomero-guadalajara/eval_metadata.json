@@ -1,0 +1,47 @@
+{
+  "eval_id": 0,
+  "eval_name": "plomero-guadalajara",
+  "prompt": "Necesito auditar mi página de plomería. La URL es https://www.plomeriajuanperez.com/servicio-plomeria-guadalajara/ y la keyword objetivo es 'plomero en guadalajara'. Me dijeron que no aparezco bien en Google Maps y quiero saber qué está mal con mi página. El sitio lo hizo mi sobrino hace como 2 años.",
+  "assertions": [
+    {
+      "name": "Resumen inicial de 5 bullets presente",
+      "description": "El output debe comenzar con un resumen ejecutivo de 5 bullets identificando 'Grandes Victorias / Grandes Problemas'"
+    },
+    {
+      "name": "Tabla de Findings existe con estructura correcta",
+      "description": "Debe contener una tabla con columnas: Área auditada | Qué revisaste | Qué encontraste | Estado | Por qué importa | Prioridad"
+    },
+    {
+      "name": "Cobertura mínima de áreas auditadas (10 de 12)",
+      "description": "Se auditaron al menos 10 de las 12 áreas obligatorias: title, meta description, H1/headings, keyword targeting, señales locales, contenido, enlaces internos, imágenes, schema, canonical, PageSpeed, CTA"
+    },
+    {
+      "name": "Tabla de Action Steps existe con estructura correcta",
+      "description": "Debe contener una tabla con columnas: Prioridad | Tarea | Recomendación exacta | Esfuerzo | Impacto | Notas"
+    },
+    {
+      "name": "Estados correctos usados en Findings",
+      "description": "Solo se usan estados válidos: Correcto / Incorrecto / Necesita mejora / Desconocido (no otros términos)"
+    },
+    {
+      "name": "Priorización P0/P1/P2 presente",
+      "description": "Los findings usan las prioridades P0, P1, P2 correctamente"
+    },
+    {
+      "name": "Esfuerzo e impacto especificados en Action Steps",
+      "description": "Cada Action Step tiene esfuerzo (S/M/L) e impacto (Bajo/Medio/Alto) claramente especificado"
+    },
+    {
+      "name": "Evidencia específica presente (al menos 50%)",
+      "description": "Al menos la mitad de los findings incluyen citas exactas, snippets o datos específicos en lugar de descripciones genéricas"
+    },
+    {
+      "name": "Recomendaciones accionables con texto exacto",
+      "description": "Al menos algunas Action Steps incluyen recomendaciones exactas (texto de reemplazo, código específico) no solo indicaciones vagas"
+    },
+    {
+      "name": "Marca lo Desconocido en lugar de inventar",
+      "description": "Cuando no puede verificar algo (ej. sitio no accesible), lo marca claramente como Desconocido o explica la limitación, sin inventar datos"
+    }
+  ]
+}

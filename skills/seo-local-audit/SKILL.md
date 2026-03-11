@@ -1,5 +1,5 @@
 ---
-name: audit
+name: seo-local-audit
 description: >
   Full SEO Local audit en un solo comando. Ejecuta todos los audits en paralelo
   (on-page, schema, rankability, GBP propio, competidores) y genera un roadmap

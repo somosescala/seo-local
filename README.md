@@ -8,7 +8,7 @@ Plugin para Claude Code que convierte a Claude en un **auditor senior de SEO Loc
 
 | Comando | Descripción |
 |---------|-------------|
-| `/seo-local:audit` | **Full audit en un comando** — ejecuta todo en paralelo y genera roadmap en PDF |
+| `/seo-local:seo-local-audit` | **Full audit en un comando** — ejecuta todo en paralelo y genera roadmap en PDF |
 | `/seo-local:seo-roadmap` | Consolida resultados de auditorías previas en un roadmap + PDF |
 | `/seo-local:seo-plan` | Guía de inicio — explica el proceso completo y por dónde empezar |
 | `/seo-local:gbp-audit` | Audita TU propia ficha de Google Business Profile |
@@ -38,7 +38,7 @@ claude --plugin-dir ./seo-local
 
 ## Uso
 
-### `/audit` — Full SEO Local Audit (recomendado)
+### `/seo-local-audit` — Full SEO Local Audit (recomendado)
 
 Ejecuta todos los audits en paralelo con **un solo comando** usando sub-agentes especializados, luego genera un roadmap consolidado en PDF listo para entregar al cliente.
 
@@ -157,7 +157,7 @@ seo-local/
 ├── .claude-plugin/
 │   └── plugin.json          # Manifiesto del plugin
 ├── skills/
-│   ├── audit/
+│   ├── seo-local-audit/
 │   │   └── SKILL.md         # Master: lanza todos los audits + genera PDF
 │   ├── seo-roadmap/
 │   │   └── SKILL.md         # Consolida hallazgos en roadmap + PDF

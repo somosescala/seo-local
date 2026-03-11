@@ -1,0 +1,23 @@
+{
+  "skill_name": "onpage-audit",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Necesito auditar mi página de plomería. La URL es https://www.plomeriajuanperez.com/servicio-plomeria-guadalajara/ y la keyword objetivo es 'plomero en guadalajara'. Me dijeron que no aparezco bien en Google Maps y quiero saber qué está mal con mi página. El sitio lo hizo mi sobrino hace como 2 años.",
+      "expected_output": "Auditoría completa con resumen de 5 bullets, tabla de Findings con al menos 12 áreas auditadas (title, meta, H1, headings, señales locales NAP, contenido, enlaces internos, imágenes, schema, canonical, PageSpeed, CTA), y tabla de Action Steps priorizada con recomendaciones específicas y texto exacto de reemplazo donde aplique.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "Hola, tengo una clínica dental en Monterrey y la página https://clinicadentalmty.mx/ortodoncia-invisible/ no está rankeando para 'ortodoncia invisible monterrey'. Ya tiene schema markup pero no sé si está bien. También me preocupa que la velocidad sea muy lenta. ¿Puedes hacer una auditoría completa?",
+      "expected_output": "Auditoría completa con resumen de 5 bullets, tabla de Findings con evaluación específica de schema markup existente y PageSpeed/CWV, y tabla de Action Steps con recomendaciones priorizadas para schema y velocidad.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "oye necesito ayuda con la página de mi restaurante www.tacosdonjuan.com.mx/sucursal-queretaro estoy tratando de posicionarme para 'tacos al pastor queretaro' pero no aparezco ni en la segunda página. tengo muchas reseñas buenas en google pero en la web no tengo casi contenido, solo fotos del menú. que me recomiendas?",
+      "expected_output": "Auditoría completa con resumen identificando problemas de contenido delgado, tabla de Findings mostrando deficiencias en profundidad de contenido y señales locales, y tabla de Action Steps con recomendaciones específicas para expandir contenido y aprovechar reseñas.",
+      "files": []
+    }
+  ]
+}

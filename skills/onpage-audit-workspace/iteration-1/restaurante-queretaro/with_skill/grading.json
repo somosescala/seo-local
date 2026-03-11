@@ -1,0 +1,59 @@
+{
+  "eval_name": "restaurante-queretaro",
+  "configuration": "with_skill",
+  "pass_rate": 1.0,
+  "passed": 10,
+  "total": 10,
+  "expectations": [
+    {
+      "text": "Resumen inicial de 5 bullets presente",
+      "passed": true,
+      "evidence": "Found 5 numbered points and 7 bullet points in first 2000 chars"
+    },
+    {
+      "text": "Tabla de Findings existe con estructura correcta",
+      "passed": true,
+      "evidence": "Found Findings table markers"
+    },
+    {
+      "text": "Cobertura mínima de áreas auditadas (10 de 12)",
+      "passed": true,
+      "evidence": "Found 13/13 required audit areas mentioned"
+    },
+    {
+      "text": "Tabla de Action Steps existe con estructura correcta",
+      "passed": true,
+      "evidence": "Found Action Steps table markers"
+    },
+    {
+      "text": "Estados correctos usados en Findings",
+      "passed": true,
+      "evidence": "Uses valid status terms"
+    },
+    {
+      "text": "Priorización P0/P1/P2 presente",
+      "passed": true,
+      "evidence": "Found P0: 24, P1: 18, P2: 8 priority markers"
+    },
+    {
+      "text": "Esfuerzo e impacto especificados en Action Steps",
+      "passed": true,
+      "evidence": "Found 20 effort markers (S/M/L) and 20 impact markers"
+    },
+    {
+      "text": "Evidencia específica presente (al menos 50%)",
+      "passed": true,
+      "evidence": "Found 191 quotes, 8 code blocks, 13 specific metrics"
+    },
+    {
+      "text": "Recomendaciones accionables con texto exacto",
+      "passed": true,
+      "evidence": "Found 8 code blocks with specific recommendations"
+    },
+    {
+      "text": "Marca lo Desconocido en lugar de inventar",
+      "passed": true,
+      "evidence": "Found 21 'Desconocido' + 0 'No disponible' markers, indicating honest reporting of limitations"
+    }
+  ]
+}
