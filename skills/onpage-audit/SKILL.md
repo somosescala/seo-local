@@ -42,23 +42,59 @@ Impacto: `Bajo` / `Medio` / `Alto`
 
 ## Flujo de trabajo (no omitir pasos)
 
+**PASO 0 — Verificar acceso a herramientas de navegador (OBLIGATORIO)**
+
+Antes de hacer cualquier otra cosa:
+1. Llama a `mcp__Claude_in_Chrome__tabs_context_mcp` para obtener el tab activo.
+2. Si responde con un tab ID válido → tienes acceso a Chrome. Guarda el tab ID y continúa al Paso 1.
+3. Si la herramienta NO existe o falla → retorna INMEDIATAMENTE este mensaje y detente:
+
+```
+❌ AUDITORÍA CANCELADA — Sin acceso a navegador
+
+No tengo acceso a las herramientas de Chrome (mcp__Claude_in_Chrome).
+No puedo abrir URLs ni verificar datos reales.
+Inventar datos sería peor que no hacer la auditoría.
+
+Solución: Asegúrate de que la extensión Claude in Chrome esté activa y conectada, luego intenta de nuevo.
+```
+
 **PASO 1 — Abrir y capturar básicos**
-- Abre la URL en Chrome.
-- Confirma que carga. Nota la URL final (después de redirecciones).
-- Captura:
-  - Título visible en la pestaña del navegador
-  - Texto del H1 visible
-  - Primeras 200–300 palabras del contenido principal
+- Usa `mcp__Claude_in_Chrome__navigate` con `{"url": "[URL]", "tabId": [TAB_ID]}` para abrir la URL.
+- Usa `mcp__Claude_in_Chrome__get_page_text` con el tab ID para extraer el texto completo de la página.
+- Usa `mcp__Claude_in_Chrome__javascript_tool` para capturar datos exactos:
+  ```javascript
+  // Título visible
+  document.title
+  // H1
+  document.querySelector('h1')?.textContent?.trim()
+  // URL final (post-redirect)
+  window.location.href
+  // Primeras 300 palabras del body
+  document.body.innerText.slice(0, 1500)
+  ```
+- Si `navigate` falla, reporta "Página no accesible" como primer finding — NO inventes datos.
 
 **PASO 2 — Extraer elementos técnicos del source**
-- Desde el código fuente o devtools, extrae:
-  - `<title>` tag (exacto)
-  - meta description (exacta)
-  - canonical URL (exacta)
-  - robots meta tag (si existe)
-  - hreflang tags (si existen)
-  - Open Graph / Twitter tags (opcional)
-  - Structured data (JSON-LD / microdata) — copia los schema types usados
+- Usa `mcp__Claude_in_Chrome__javascript_tool` para extraer todos los elementos técnicos:
+  ```javascript
+  ({
+    title: document.querySelector('title')?.textContent,
+    metaDescription: document.querySelector('meta[name="description"]')?.content,
+    canonical: document.querySelector('link[rel="canonical"]')?.href,
+    robots: document.querySelector('meta[name="robots"]')?.content,
+    ogTitle: document.querySelector('meta[property="og:title"]')?.content,
+    ogDescription: document.querySelector('meta[property="og:description"]')?.content,
+    schema: Array.from(document.querySelectorAll('script[type="application/ld+json"]')).map(s => s.textContent),
+    headings: {
+      h1: Array.from(document.querySelectorAll('h1')).map(h => h.textContent.trim()),
+      h2: Array.from(document.querySelectorAll('h2')).map(h => h.textContent.trim()),
+      h3: Array.from(document.querySelectorAll('h3')).map(h => h.textContent.trim())
+    },
+    images: Array.from(document.querySelectorAll('img')).slice(0, 10).map(img => ({src: img.src, alt: img.alt}))
+  })
+  ```
+- Cita los resultados exactos. Si un campo retorna null/undefined, márcalo como "Ausente".
 
 **PASO 3 — Auditoría de headings y estructura de contenido**
 - Lista todos los headings en orden: H1, H2s, H3s (texto exacto).
@@ -107,11 +143,13 @@ Impacto: `Bajo` / `Medio` / `Alto`
   - Si falta algo, recomienda el schema exacto a agregar (level alto + campos clave).
 
 **PASO 9 — Page experience check rápido**
-- Corre PageSpeed Insights para la URL (mobile primero).
+- Usa `mcp__Claude_in_Chrome__navigate` para abrir: `https://pagespeed.web.dev/report?url=[URL_ENCODED]&strategy=mobile`
+- Espera que cargue el reporte (puede tardar ~10s) y usa `mcp__Claude_in_Chrome__get_page_text` para extraer los scores.
+- Alternativamente, usa WebFetch con: `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=[URL]&strategy=mobile`
 - Captura:
-  - Score de rendimiento
+  - Score de rendimiento (0–100)
   - Core Web Vitals pass/fail (LCP, INP, CLS) y las métricas que fallan
-- Si no puedes correrlo, marca Desconocido y sugiere qué revisar.
+- Si no puedes obtenerlo, marca "Desconocido" — no inventes un score.
 
 **PASO 10 — Construir las dos tablas**
 
@@ -133,6 +171,22 @@ Impacto: `Bajo` / `Medio` / `Alto`
 
 **Reglas finales:**
 - Usa evidencia. Cita tags/texto exacto al marcar Correcto/Incorrecto.
-- No inventes datos.
 - Si la página está bloqueada o no carga, repórtalo como primer finding.
 - Las recomendaciones deben ser prácticas y específicas (escribe el texto de reemplazo exacto cuando sea posible).
+
+---
+
+## ⛔ REGLA ABSOLUTA — Sin evidencia real, sin dato
+
+Si no pudiste verificar un dato con herramientas reales (`mcp__Claude_in_Chrome__*` o WebFetch):
+- Escribe `Desconocido` en el campo de evidencia
+- Agrega nota: `"No verificado — no se pudo acceder con herramientas de navegador"`
+- **NUNCA escribas un dato que no puedas citar de una fuente real**
+- Si más del 50% de los findings están como `Desconocido`, detén la auditoría y reporta:
+
+```
+⚠️ AUDITORÍA INCOMPLETA
+Más del 50% de los datos no pudieron verificarse con herramientas reales.
+Un reporte con datos inventados es peor que ningún reporte.
+Verifica que Chrome MCP esté disponible y vuelve a correr la auditoría.
+```

@@ -17,14 +17,33 @@ No das consejos genéricos. No inventas datos. Si no puedes verificar algo, lo m
 
 ---
 
+## PASO 0 — Verificar acceso a herramientas de navegador (OBLIGATORIO)
+
+Antes de hacer cualquier otra cosa:
+1. Llama a `mcp__Claude_in_Chrome__tabs_context_mcp` para obtener el tab activo.
+2. Si responde con un tab ID válido → tienes acceso a Chrome. Guarda el tab ID y continúa al Paso 1.
+3. Si la herramienta NO existe o falla → retorna INMEDIATAMENTE este mensaje y detente:
+
+```
+❌ AUDITORÍA CANCELADA — Sin acceso a navegador
+
+No tengo acceso a las herramientas de Chrome (mcp__Claude_in_Chrome).
+No puedo abrir Google Maps ni ver los competidores reales que rankean.
+Inventar competidores y sus datos sería un análisis completamente inútil y engañoso.
+
+Solución: Asegúrate de que la extensión Claude in Chrome esté activa y conectada, luego intenta de nuevo.
+```
+
 ## PASO 1 — Búsqueda en Google Maps
 
 1. Pide al usuario la keyword exacta.
-2. Abre Google Maps y busca esa keyword.
-3. Activa la vista **mapa + lista**.
-4. **Ignora todos los resultados patrocinados / promovidos.**
-5. Identifica los **top 5 resultados orgánicos**.
-6. Preséntelos en lista numerada antes de continuar:
+2. Usa `mcp__Claude_in_Chrome__navigate` con `{"url": "https://www.google.com/maps/search/[KEYWORD_URL_ENCODED]", "tabId": [TAB_ID]}`.
+3. Espera que cargue y usa `mcp__Claude_in_Chrome__screenshot` para ver los resultados visualmente.
+4. Usa `mcp__Claude_in_Chrome__get_page_text` para leer los nombres de negocios listados.
+5. Usa `mcp__Claude_in_Chrome__read_page` con `filter: "all"` para obtener el árbol completo con nombres y detalles.
+6. **Ignora todos los resultados patrocinados / promovidos.**
+7. Identifica los **top 5 resultados orgánicos** — solo lo que veas en pantalla, nada inventado.
+8. Preséntelos en lista numerada antes de continuar:
 
 ```
 Top 5 orgánicos — [keyword]
@@ -147,3 +166,13 @@ Para cada lever, cita qué competidores lo demuestran y cómo.
 | ... | ... | ... |
 
 **STOP. Esperar siguiente instrucción.**
+
+---
+
+## ⛔ REGLA ABSOLUTA — Sin evidencia real, sin dato
+
+Si no pudiste abrir Google Maps con `mcp__Claude_in_Chrome__navigate` y leer los resultados reales:
+- No reportes ningún negocio competidor
+- No inventes nombres, reseñas, ratings ni ningún dato
+- **NUNCA inventes los top 5 orgánicos ni sus métricas**
+- Cancela con: "No se pudo acceder a Google Maps — Chrome MCP no disponible"

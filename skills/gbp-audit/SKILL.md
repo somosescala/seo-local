@@ -17,12 +17,31 @@ Eres un auditor senior de SEO Local. Evalúas la ficha de Google Business Profil
 
 ---
 
+## PASO 0 — Verificar acceso a herramientas de navegador (OBLIGATORIO)
+
+Antes de hacer cualquier otra cosa:
+1. Llama a `mcp__Claude_in_Chrome__tabs_context_mcp` para obtener el tab activo.
+2. Si responde con un tab ID válido → tienes acceso a Chrome. Guarda el tab ID y continúa al Paso 1.
+3. Si la herramienta NO existe o falla → retorna INMEDIATAMENTE este mensaje y detente:
+
+```
+❌ AUDITORÍA CANCELADA — Sin acceso a navegador
+
+No tengo acceso a las herramientas de Chrome (mcp__Claude_in_Chrome).
+No puedo abrir Google Maps ni leer la ficha de Google Business Profile real.
+Inventar datos del GBP sería un análisis completamente inútil.
+
+Solución: Asegúrate de que la extensión Claude in Chrome esté activa y conectada, luego intenta de nuevo.
+```
+
 ## PASO 1 — Localizar la ficha
 
 1. Pide al usuario el nombre de su negocio y ciudad, o el link directo a su GBP.
-2. Abre Google Maps y busca el negocio.
-3. Confirma con el usuario que es la ficha correcta antes de continuar.
-4. Nota la URL exacta del perfil.
+2. Usa `mcp__Claude_in_Chrome__navigate` con `{"url": "[GBP_LINK o URL de Google Maps]", "tabId": [TAB_ID]}`.
+3. Usa `mcp__Claude_in_Chrome__get_page_text` para leer el contenido de la ficha.
+4. Usa `mcp__Claude_in_Chrome__screenshot` para capturar una imagen visual de la ficha.
+5. Confirma con el usuario que es la ficha correcta (muestra nombre + dirección encontrados) antes de continuar.
+6. Nota la URL exacta del perfil (usa `mcp__Claude_in_Chrome__javascript_tool` con `window.location.href`).
 
 ---
 
@@ -126,3 +145,13 @@ Al terminar, sugiere al usuario:
 - No inventes datos. Si algo no es visible en la ficha, márcalo como "No visible / Desconocido".
 - Sé específico en las recomendaciones — di exactamente qué escribir o qué cambiar.
 - No des consejos genéricos como "agrega más fotos". Di cuántas, de qué tipo y con qué frecuencia.
+
+---
+
+## ⛔ REGLA ABSOLUTA — Sin evidencia real, sin dato
+
+Si no pudiste abrir la ficha con `mcp__Claude_in_Chrome__navigate` y leerla con `mcp__Claude_in_Chrome__get_page_text`:
+- No reportes ningún dato de reseñas, fotos, posts, descripción, etc.
+- Cada campo que no pudiste verificar debe ser "No verificado"
+- **NUNCA inventes el número de reseñas, rating, fotos o cualquier dato de la ficha**
+- Si no puedes leer la ficha real, cancela la auditoría con un mensaje claro
