@@ -62,37 +62,25 @@ Solución: Asegúrate de que la extensión Claude in Chrome esté activa y conec
 **PASO 1 — Abrir y capturar básicos**
 - Usa `mcp__Claude_in_Chrome__navigate` con `{"url": "[URL]", "tabId": [TAB_ID]}` para abrir la URL.
 - Usa `mcp__Claude_in_Chrome__get_page_text` con el tab ID para extraer el texto completo de la página.
-- Usa `mcp__Claude_in_Chrome__javascript_tool` para capturar datos exactos:
-  ```javascript
-  // Título visible
-  document.title
-  // H1
-  document.querySelector('h1')?.textContent?.trim()
-  // URL final (post-redirect)
-  window.location.href
-  // Primeras 300 palabras del body
-  document.body.innerText.slice(0, 1500)
+- Usa `mcp__Claude_in_Chrome__javascript_tool` con `action: "javascript_exec"` para capturar datos exactos:
+  - `action`: `"javascript_exec"` (SIEMPRE requerido)
+  - `tabId`: el tab ID obtenido en PASO 0
+  - `text`: el código JavaScript a ejecutar
+
+  Ejemplo — capturar básicos:
+  ```
+  action: "javascript_exec"
+  tabId: [TAB_ID]
+  text: "({title: document.title, h1: document.querySelector('h1')?.textContent?.trim(), url: window.location.href, body: document.body.innerText.slice(0, 1500)})"
   ```
 - Si `navigate` falla, reporta "Página no accesible" como primer finding — NO inventes datos.
 
 **PASO 2 — Extraer elementos técnicos del source**
-- Usa `mcp__Claude_in_Chrome__javascript_tool` para extraer todos los elementos técnicos:
-  ```javascript
-  ({
-    title: document.querySelector('title')?.textContent,
-    metaDescription: document.querySelector('meta[name="description"]')?.content,
-    canonical: document.querySelector('link[rel="canonical"]')?.href,
-    robots: document.querySelector('meta[name="robots"]')?.content,
-    ogTitle: document.querySelector('meta[property="og:title"]')?.content,
-    ogDescription: document.querySelector('meta[property="og:description"]')?.content,
-    schema: Array.from(document.querySelectorAll('script[type="application/ld+json"]')).map(s => s.textContent),
-    headings: {
-      h1: Array.from(document.querySelectorAll('h1')).map(h => h.textContent.trim()),
-      h2: Array.from(document.querySelectorAll('h2')).map(h => h.textContent.trim()),
-      h3: Array.from(document.querySelectorAll('h3')).map(h => h.textContent.trim())
-    },
-    images: Array.from(document.querySelectorAll('img')).slice(0, 10).map(img => ({src: img.src, alt: img.alt}))
-  })
+- Usa `mcp__Claude_in_Chrome__javascript_tool` con `action: "javascript_exec"` para extraer todos los elementos técnicos:
+  ```
+  action: "javascript_exec"
+  tabId: [TAB_ID]
+  text: "({title: document.querySelector('title')?.textContent, metaDescription: document.querySelector('meta[name=\"description\"]')?.content, canonical: document.querySelector('link[rel=\"canonical\"]')?.href, robots: document.querySelector('meta[name=\"robots\"]')?.content, ogTitle: document.querySelector('meta[property=\"og:title\"]')?.content, schema: Array.from(document.querySelectorAll('script[type=\"application/ld+json\"]')).map(s => s.textContent), h1: Array.from(document.querySelectorAll('h1')).map(h => h.textContent.trim()), h2: Array.from(document.querySelectorAll('h2')).map(h => h.textContent.trim()), h3: Array.from(document.querySelectorAll('h3')).map(h => h.textContent.trim()), images: Array.from(document.querySelectorAll('img')).slice(0,10).map(img => ({src: img.src, alt: img.alt}))})"
   ```
 - Cita los resultados exactos. Si un campo retorna null/undefined, márcalo como "Ausente".
 

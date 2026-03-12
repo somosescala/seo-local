@@ -45,13 +45,10 @@ Solución: Asegúrate de que la extensión Claude in Chrome esté activa y conec
 **PASO 2 — Buscar la keyword en Google**
 - Usa `mcp__Claude_in_Chrome__navigate` con `{"url": "https://www.google.com/search?q=[KEYWORD_URL_ENCODED]&hl=en&gl=us", "tabId": [TAB_ID]}`.
 - Usa `mcp__Claude_in_Chrome__get_page_text` para ver los resultados orgánicos.
-- Usa `mcp__Claude_in_Chrome__javascript_tool` para extraer las URLs de los top 3 orgánicos (ignora ads):
-  ```javascript
-  Array.from(document.querySelectorAll('div.g a[href^="http"]'))
-    .map(a => a.href)
-    .filter((href, i, arr) => arr.indexOf(href) === i)
-    .slice(0, 5)
-  ```
+- Usa `mcp__Claude_in_Chrome__javascript_tool` con estos parámetros exactos para extraer las URLs de los top 3 orgánicos (ignora ads):
+  - `action`: `"javascript_exec"` (SIEMPRE requerido)
+  - `tabId`: el tab ID obtenido en PASO 0
+  - `text`: `"Array.from(document.querySelectorAll('div.g a[href^=\"http\"]')).map(a => a.href).filter((href, i, arr) => arr.indexOf(href) === i).slice(0, 5)"`
 - Visita cada una de las top 3 URLs con `mcp__Claude_in_Chrome__navigate` + `mcp__Claude_in_Chrome__get_page_text` para comparar.
 
 **PASO 3 — Identifica las top 3 páginas que rankean orgánicamente para esa keyword.**

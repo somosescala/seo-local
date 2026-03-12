@@ -40,11 +40,10 @@ Solución: Asegúrate de que la extensión Claude in Chrome esté activa y conec
 
 **PASO 1 — Abrir la página y extraer schema**
 - Usa `mcp__Claude_in_Chrome__navigate` con `{"url": "[URL]", "tabId": [TAB_ID]}`.
-- Usa `mcp__Claude_in_Chrome__javascript_tool` para extraer TODOS los schemas:
-  ```javascript
-  Array.from(document.querySelectorAll('script[type="application/ld+json"]'))
-    .map((s, i) => ({ index: i, content: s.textContent }))
-  ```
+- Usa `mcp__Claude_in_Chrome__javascript_tool` con estos parámetros exactos:
+  - `action`: `"javascript_exec"` (SIEMPRE requerido)
+  - `tabId`: el tab ID obtenido en PASO 0
+  - `text`: `"Array.from(document.querySelectorAll('script[type=\"application/ld+json\"]')).map((s,i) => ({index: i, content: s.textContent}))"`
 - Cita el JSON exacto encontrado. Si no hay ninguno, reporta "Sin schema JSON-LD en la página".
 
 **PASO 2 — Lista TODOS los schema types encontrados (JSON-LD / microdata).**

@@ -41,7 +41,10 @@ Solución: Asegúrate de que la extensión Claude in Chrome esté activa y conec
 3. Usa `mcp__Claude_in_Chrome__get_page_text` para leer el contenido de la ficha.
 4. Usa `mcp__Claude_in_Chrome__screenshot` para capturar una imagen visual de la ficha.
 5. Confirma con el usuario que es la ficha correcta (muestra nombre + dirección encontrados) antes de continuar.
-6. Nota la URL exacta del perfil (usa `mcp__Claude_in_Chrome__javascript_tool` con `window.location.href`).
+6. Nota la URL exacta del perfil usando `mcp__Claude_in_Chrome__javascript_tool` con estos parámetros exactos:
+   - `action`: `"javascript_exec"` (SIEMPRE requerido)
+   - `tabId`: el tab ID obtenido en PASO 0
+   - `text`: `"window.location.href"`
 
 ---
 
