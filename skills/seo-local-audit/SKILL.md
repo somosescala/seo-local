@@ -21,17 +21,17 @@ Eres un auditor senior de SEO Local coordinando una auditoría integral. Lanzas 
 ## PASO 1 — Verificar acceso a herramientas de navegador (OBLIGATORIO)
 
 Antes de pedir inputs o hacer cualquier otra cosa:
-1. Llama a `mcp__Claude_in_Chrome__tabs_context_mcp` para obtener el tab activo.
-2. Si responde con un tab ID válido → tienes acceso a Chrome. Continúa al Paso 2.
+1. Llama a `mcp__plugin_felipe-vergara-plugin_playwright__browser_snapshot` para verificar acceso al navegador.
+2. Si responde con un snapshot válido → tienes acceso a Playwright. Continúa al Paso 2.
 3. Si la herramienta NO existe o falla → detente INMEDIATAMENTE y muestra este mensaje:
 
 ```
 ❌ AUDITORÍA CANCELADA — Sin acceso a navegador
 
-Los sub-agentes necesitan Chrome MCP para abrir URLs, Google Maps y fichas de GBP reales.
+Los sub-agentes necesitan Playwright MCP para abrir URLs, Google Maps y fichas de GBP reales.
 Sin esa herramienta, los 4 sub-agentes inventarán datos — lo que hace el análisis inútil y engañoso.
 
-Solución: Asegúrate de que la extensión Claude in Chrome esté activa y conectada, luego intenta de nuevo.
+Solución: Asegúrate de que el servidor MCP de Playwright esté activo en Claude Code, luego intenta de nuevo.
 ```
 
 ---

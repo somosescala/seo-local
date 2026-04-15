@@ -45,42 +45,36 @@ Impacto: `Bajo` / `Medio` / `Alto`
 **PASO 0 — Verificar acceso a herramientas de navegador (OBLIGATORIO)**
 
 Antes de hacer cualquier otra cosa:
-1. Llama a `mcp__Claude_in_Chrome__tabs_context_mcp` para obtener el tab activo.
-2. Si responde con un tab ID válido → tienes acceso a Chrome. Guarda el tab ID y continúa al Paso 1.
+1. Llama a `mcp__plugin_felipe-vergara-plugin_playwright__browser_snapshot` para verificar acceso al navegador.
+2. Si responde con un snapshot válido → tienes acceso a Playwright. Continúa al Paso 1.
 3. Si la herramienta NO existe o falla → retorna INMEDIATAMENTE este mensaje y detente:
 
 ```
 ❌ AUDITORÍA CANCELADA — Sin acceso a navegador
 
-No tengo acceso a las herramientas de Chrome (mcp__Claude_in_Chrome).
+No tengo acceso a las herramientas de Playwright (mcp__plugin_felipe-vergara-plugin_playwright).
 No puedo abrir URLs ni verificar datos reales.
 Inventar datos sería peor que no hacer la auditoría.
 
-Solución: Asegúrate de que la extensión Claude in Chrome esté activa y conectada, luego intenta de nuevo.
+Solución: Asegúrate de que el servidor MCP de Playwright esté activo en Claude Code, luego intenta de nuevo.
 ```
 
 **PASO 1 — Abrir y capturar básicos**
-- Usa `mcp__Claude_in_Chrome__navigate` con `{"url": "[URL]", "tabId": [TAB_ID]}` para abrir la URL.
-- Usa `mcp__Claude_in_Chrome__get_page_text` con el tab ID para extraer el texto completo de la página.
-- Usa `mcp__Claude_in_Chrome__javascript_tool` con `action: "javascript_exec"` para capturar datos exactos:
-  - `action`: `"javascript_exec"` (SIEMPRE requerido)
-  - `tabId`: el tab ID obtenido en PASO 0
-  - `text`: el código JavaScript a ejecutar
+- Usa `mcp__plugin_felipe-vergara-plugin_playwright__browser_navigate` con `{"url": "[URL]"}` para abrir la URL.
+- Usa `mcp__plugin_felipe-vergara-plugin_playwright__browser_snapshot` para extraer el contenido de la página.
+- Usa `mcp__plugin_felipe-vergara-plugin_playwright__browser_evaluate` para capturar datos exactos:
+  - `script`: el código JavaScript a ejecutar (expresión que retorna valor)
 
   Ejemplo — capturar básicos:
   ```
-  action: "javascript_exec"
-  tabId: [TAB_ID]
-  text: "({title: document.title, h1: document.querySelector('h1')?.textContent?.trim(), url: window.location.href, body: document.body.innerText.slice(0, 1500)})"
+  script: "({title: document.title, h1: document.querySelector('h1')?.textContent?.trim(), url: window.location.href, body: document.body.innerText.slice(0, 1500)})"
   ```
 - Si `navigate` falla, reporta "Página no accesible" como primer finding — NO inventes datos.
 
 **PASO 2 — Extraer elementos técnicos del source**
-- Usa `mcp__Claude_in_Chrome__javascript_tool` con `action: "javascript_exec"` para extraer todos los elementos técnicos:
+- Usa `mcp__plugin_felipe-vergara-plugin_playwright__browser_evaluate` para extraer todos los elementos técnicos:
   ```
-  action: "javascript_exec"
-  tabId: [TAB_ID]
-  text: "({title: document.querySelector('title')?.textContent, metaDescription: document.querySelector('meta[name=\"description\"]')?.content, canonical: document.querySelector('link[rel=\"canonical\"]')?.href, robots: document.querySelector('meta[name=\"robots\"]')?.content, ogTitle: document.querySelector('meta[property=\"og:title\"]')?.content, schema: Array.from(document.querySelectorAll('script[type=\"application/ld+json\"]')).map(s => s.textContent), h1: Array.from(document.querySelectorAll('h1')).map(h => h.textContent.trim()), h2: Array.from(document.querySelectorAll('h2')).map(h => h.textContent.trim()), h3: Array.from(document.querySelectorAll('h3')).map(h => h.textContent.trim()), images: Array.from(document.querySelectorAll('img')).slice(0,10).map(img => ({src: img.src, alt: img.alt}))})"
+  script: "({title: document.querySelector('title')?.textContent, metaDescription: document.querySelector('meta[name=\"description\"]')?.content, canonical: document.querySelector('link[rel=\"canonical\"]')?.href, robots: document.querySelector('meta[name=\"robots\"]')?.content, ogTitle: document.querySelector('meta[property=\"og:title\"]')?.content, schema: Array.from(document.querySelectorAll('script[type=\"application/ld+json\"]')).map(s => s.textContent), h1: Array.from(document.querySelectorAll('h1')).map(h => h.textContent.trim()), h2: Array.from(document.querySelectorAll('h2')).map(h => h.textContent.trim()), h3: Array.from(document.querySelectorAll('h3')).map(h => h.textContent.trim()), images: Array.from(document.querySelectorAll('img')).slice(0,10).map(img => ({src: img.src, alt: img.alt}))})"
   ```
 - Cita los resultados exactos. Si un campo retorna null/undefined, márcalo como "Ausente".
 
@@ -131,8 +125,8 @@ Solución: Asegúrate de que la extensión Claude in Chrome esté activa y conec
   - Si falta algo, recomienda el schema exacto a agregar (level alto + campos clave).
 
 **PASO 9 — Page experience check rápido**
-- Usa `mcp__Claude_in_Chrome__navigate` para abrir: `https://pagespeed.web.dev/report?url=[URL_ENCODED]&strategy=mobile`
-- Espera que cargue el reporte (puede tardar ~10s) y usa `mcp__Claude_in_Chrome__get_page_text` para extraer los scores.
+- Usa `mcp__plugin_felipe-vergara-plugin_playwright__browser_navigate` para abrir: `https://pagespeed.web.dev/report?url=[URL_ENCODED]&strategy=mobile`
+- Espera que cargue el reporte (puede tardar ~10s) y usa `mcp__plugin_felipe-vergara-plugin_playwright__browser_snapshot` para extraer los scores.
 - Alternativamente, usa WebFetch con: `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=[URL]&strategy=mobile`
 - Captura:
   - Score de rendimiento (0–100)
@@ -166,7 +160,7 @@ Solución: Asegúrate de que la extensión Claude in Chrome esté activa y conec
 
 ## ⛔ REGLA ABSOLUTA — Sin evidencia real, sin dato
 
-Si no pudiste verificar un dato con herramientas reales (`mcp__Claude_in_Chrome__*` o WebFetch):
+Si no pudiste verificar un dato con herramientas reales (`mcp__plugin_felipe-vergara-plugin_playwright__browser_*` o WebFetch):
 - Escribe `Desconocido` en el campo de evidencia
 - Agrega nota: `"No verificado — no se pudo acceder con herramientas de navegador"`
 - **NUNCA escribas un dato que no puedas citar de una fuente real**
@@ -176,5 +170,5 @@ Si no pudiste verificar un dato con herramientas reales (`mcp__Claude_in_Chrome_
 ⚠️ AUDITORÍA INCOMPLETA
 Más del 50% de los datos no pudieron verificarse con herramientas reales.
 Un reporte con datos inventados es peor que ningún reporte.
-Verifica que Chrome MCP esté disponible y vuelve a correr la auditoría.
+Verifica que Playwright MCP esté disponible y vuelve a correr la auditoría.
 ```

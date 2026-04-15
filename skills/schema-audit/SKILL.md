@@ -24,26 +24,24 @@ No das consejos genéricos. No inventas datos. Si no puedes verificar algo, lo m
 **PASO 0 — Verificar acceso a herramientas de navegador (OBLIGATORIO)**
 
 Antes de hacer cualquier otra cosa:
-1. Llama a `mcp__Claude_in_Chrome__tabs_context_mcp` para obtener el tab activo.
-2. Si responde con un tab ID válido → tienes acceso a Chrome. Guarda el tab ID y continúa.
+1. Llama a `mcp__plugin_felipe-vergara-plugin_playwright__browser_snapshot` para verificar acceso al navegador.
+2. Si responde con un snapshot válido → tienes acceso a Playwright. Continúa.
 3. Si la herramienta NO existe o falla → retorna INMEDIATAMENTE este mensaje y detente:
 
 ```
 ❌ AUDITORÍA CANCELADA — Sin acceso a navegador
 
-No tengo acceso a las herramientas de Chrome (mcp__Claude_in_Chrome).
+No tengo acceso a las herramientas de Playwright (mcp__plugin_felipe-vergara-plugin_playwright).
 No puedo inspeccionar el código fuente real de la página.
 Inventar schemas sería un análisis inútil.
 
-Solución: Asegúrate de que la extensión Claude in Chrome esté activa y conectada, luego intenta de nuevo.
+Solución: Asegúrate de que el servidor MCP de Playwright esté activo en Claude Code, luego intenta de nuevo.
 ```
 
 **PASO 1 — Abrir la página y extraer schema**
-- Usa `mcp__Claude_in_Chrome__navigate` con `{"url": "[URL]", "tabId": [TAB_ID]}`.
-- Usa `mcp__Claude_in_Chrome__javascript_tool` con estos parámetros exactos:
-  - `action`: `"javascript_exec"` (SIEMPRE requerido)
-  - `tabId`: el tab ID obtenido en PASO 0
-  - `text`: `"Array.from(document.querySelectorAll('script[type=\"application/ld+json\"]')).map((s,i) => ({index: i, content: s.textContent}))"`
+- Usa `mcp__plugin_felipe-vergara-plugin_playwright__browser_navigate` con `{"url": "[URL]"}`.
+- Usa `mcp__plugin_felipe-vergara-plugin_playwright__browser_evaluate` con estos parámetros exactos:
+  - `script`: `"Array.from(document.querySelectorAll('script[type=\"application/ld+json\"]')).map((s,i) => ({index: i, content: s.textContent}))"`
 - Cita el JSON exacto encontrado. Si no hay ninguno, reporta "Sin schema JSON-LD en la página".
 
 **PASO 2 — Lista TODOS los schema types encontrados (JSON-LD / microdata).**
@@ -82,7 +80,7 @@ Prioridad: `Alta` / `Media` / `Baja`
 
 ## ⛔ REGLA ABSOLUTA — Sin evidencia real, sin dato
 
-Si no pudiste extraer el schema real con `mcp__Claude_in_Chrome__javascript_tool`:
+Si no pudiste extraer el schema real con `mcp__plugin_felipe-vergara-plugin_playwright__browser_evaluate`:
 - No asumas qué schemas existen
 - Reporta "No verificado" en la columna de existencia
 - **NUNCA inventes schemas "típicos" de ese tipo de negocio sin haberlos visto en el código**
